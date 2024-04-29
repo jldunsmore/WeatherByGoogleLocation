@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherByGoogleLocation", "WeatherByGoogleLocation.csproj", "{F2D30D84-4C88-4B0C-9497-A3FE2E8C6071}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherByGoogleLocation", "WeatherByGoogleLocation.csproj", "{F2D30D84-4C88-4B0C-9497-A3FE2E8C6071}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WeatherByGoogleLocationDatabase", "..\WeatherByGoogleLocationDatabase\WeatherByGoogleLocationDatabase.sqlproj", "{349F8DBB-B7F1-4DB6-AD83-5D4E36586E1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{F2D30D84-4C88-4B0C-9497-A3FE2E8C6071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D30D84-4C88-4B0C-9497-A3FE2E8C6071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D30D84-4C88-4B0C-9497-A3FE2E8C6071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{349F8DBB-B7F1-4DB6-AD83-5D4E36586E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{349F8DBB-B7F1-4DB6-AD83-5D4E36586E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{349F8DBB-B7F1-4DB6-AD83-5D4E36586E1B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{349F8DBB-B7F1-4DB6-AD83-5D4E36586E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{349F8DBB-B7F1-4DB6-AD83-5D4E36586E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{349F8DBB-B7F1-4DB6-AD83-5D4E36586E1B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
