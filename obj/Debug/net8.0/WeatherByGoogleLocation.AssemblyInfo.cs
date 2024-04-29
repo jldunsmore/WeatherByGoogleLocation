@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeatherByGoogleLocation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d04fa3a969c85f46f63a75cf94a17c4b7943f865")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+993524260bc9a31637ade26f7c2e4ceea8d267d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeatherByGoogleLocation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeatherByGoogleLocation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
