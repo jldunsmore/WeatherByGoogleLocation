@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\gmap.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Views\Home\CSS\gmap.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
