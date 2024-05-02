@@ -1,6 +1,7 @@
 ﻿// Initialize and add the map
 let map;
 let markers = [];
+let weatherData = "";
 
 async function initMap() {
     // The location of Iowa Capital
@@ -25,7 +26,7 @@ async function initMap() {
         deleteMarkers();
         placeMarkerAndPanTo(e.latLng, map);
         console.log(JSON.stringify(e.latLng));
-        getWeatherData(e.latLng.lat, e.latLng.lng);        
+        getWeatherData(e.latLng.lat, e.latLng.lng);
     });
 
 }
@@ -59,7 +60,7 @@ function getWeatherData(lat,lng) {
         type: 'GET',
         data: { lat: lat, lng: lng },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             //some errror, some show err msg to user and log the error  

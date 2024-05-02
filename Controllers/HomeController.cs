@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Net.Http.Headers;
+using System.Xml;
 using WeatherByGoogleLocation.Models;
-using static System.Net.WebRequestMethods;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using WeatherByGoogleLocation.Models.Forecast;
+
 
 namespace WeatherByGoogleLocation.Controllers
 {
@@ -20,13 +23,19 @@ namespace WeatherByGoogleLocation.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var weatherData = GetWeatherData(0,0);
+            return View(weatherData);
+        }
+        public IActionResult ShowWeather(WeatherData weatherData)
+        {
+            return View(weatherData);
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -35,25 +44,40 @@ namespace WeatherByGoogleLocation.Controllers
         }
 
         [HttpGet]
-        public string GetWeatherData(double lat, double lng)
+        public WeatherData GetWeatherData(double lat, double lng)
         {
             if (lat == 0) { lat = 41.591494859495114; }
             if (lng == 0) { lng = -93.60379396555436; }
 
             var weatherURL = $"https://api.weather.gov/points/{lat},{lng}";
-            var data = GetAPIAsync(weatherURL).Result;
+            var weatherDataJSON = GetAPIAsync(weatherURL).Result;
+            var data = JsonConvert.DeserializeObject<WeatherLatLngData>(weatherDataJSON);
 
-            return data;
+            var forecastURL = $"https://api.weather.gov/gridpoints/{data.properties.gridId}/{data.properties.gridX},{data.properties.gridY}/forecast";
+            var forecast = JsonConvert.DeserializeObject<LocationForecast>(GetAPIAsync(forecastURL).Result);
+
+            var forcastHourlyURL = $"https://api.weather.gov/gridpoints/TOP/32,81/forecast/hourly";
+            var forcastHourly = JsonConvert.DeserializeObject<dynamic>(GetAPIAsync(forcastHourlyURL).Result);
+
+            var weatherData = new WeatherData
+            {
+                Lat = lat,
+                Lng = lng,
+                RawWeatherData = forecast.properties.periods[0].detailedForecast
+
+            };
+            ShowWeather(weatherData);
+            return weatherData;
         }
 
         static async Task<string> GetAPIAsync(string path)
         {
             var data = "";
             HttpResponseMessage response = await client.GetAsync(path);
-            //if (response.IsSuccessStatusCode)
-            //{
+            if (response.IsSuccessStatusCode)
+            {
                 data = await response.Content.ReadAsStringAsync();
-            //}
+            }
             return data;
         }
 
