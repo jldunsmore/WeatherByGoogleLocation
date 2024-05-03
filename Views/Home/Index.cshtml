@@ -1,4 +1,4 @@
-﻿@model WeatherByGoogleLocation.Models.WeatherData;
+﻿@model WeatherByGoogleLocation.Models.WeatherForecast;
 
 @{
     ViewData["Title"] = "Google Map";
@@ -22,7 +22,36 @@
     </div>
     <div class="col-9 weather">
         <div id="weatherData">
-            Raw JSON Data (@ViewBag.Latitude, @ViewBag.Longitude): @Html.Raw(@ViewBag.Forecast);
+            <span style="font-size: small;font-style: italic;">(Lat: @ViewBag.Latitude, Lng: @ViewBag.Longitude) - @ViewBag.StartTime</span>
+            <ul>
+            @foreach (var period in Model.Forecast)
+            {
+                <li class="periodItem">
+                    <span class="periodTitle" onclick="toggleDetails('period_@period.SequenceId')">
+                        <img src="@period.IconURL" alt="forecast image" style="width:50px;height:50px;"> 
+                        @period.Name - @period.Temperature @period.TemperatureUnit - @period.ShortForecast
+                    </span>
+                    <ul id="period_@period.SequenceId" style="display: none;">
+                        <li class="periodItem">
+                            @period.DetailedForecast
+                            <hr />
+                            <ul>
+                                <li class="periodItem">
+                                    Chance of Rain: @period.ProbabilityOfPercipitation
+                                </li>
+                                <li class="periodItem">
+                                    Humidity: @period.RelativeHumidity
+                                </li>
+                                <li class="periodItem">
+                                    Windspeed: @period.WindDirection @period.WindSpeed
+                                </li>
+                            </ul>
+                            <hr />
+                        </li>
+                    </ul>
+                </li>
+            }
+            </ul>
         </div>
     </div>
 </div>

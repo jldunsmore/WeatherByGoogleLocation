@@ -45,3 +45,11 @@ body {
     border: solid black 1px;
     overflow: scroll;
 }
+
+li.periodItem {
+    list-style: none;
+}
+
+span.periodTitle:hover {
+    color: blue;
+}
