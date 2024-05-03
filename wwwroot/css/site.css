@@ -43,4 +43,5 @@ body {
 .weather {
     height:100%;
     border: solid black 1px;
+    overflow: scroll;
 }

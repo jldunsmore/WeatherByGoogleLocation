@@ -1,11 +1,15 @@
 ﻿// Initialize and add the map
 let map;
 let markers = [];
-let weatherData = "";
 
 async function initMap() {
-    // The location of Iowa Capital
-    const position = { lat: 41.592577723498685, lng: - 93.60370324844448 };
+    var url = location.href;
+    let searchParams = new URLSearchParams(window.location.search);
+    var position = { lat: 41.592577723498685, lng: -93.60370324844448 }; // The location of Iowa Capital
+    if (searchParams.size > 0)
+    {
+        position = { lat: searchParams.get('lat'), lng: searchParams.get('lng') };
+    }
 
     const mapDiv = document.getElementById("map");
     const weatherDiv = document.getElementById("weatherData");
@@ -13,22 +17,24 @@ async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-    // The map, centered at Iowa Capital
     map = new Map(document.getElementById("map"), {
         zoom: 8,
         center: position,
         mapId: "DefaultLocation",
     });
 
-    addMarker( map, position, "Iowa Capital");
+    if (searchParams.size == 0) {
+        addMarker(map, position, "Iowa Capital");
+    }
+    else {
+        var latLng = new google.maps.LatLng(position.lat, position.lng);
+        placeMarkerAndPanTo(latLng, map);
+    }
 
     map.addListener("click", (e) => {
         deleteMarkers();
-        placeMarkerAndPanTo(e.latLng, map);
-        console.log(JSON.stringify(e.latLng));
-        getWeatherData(e.latLng.lat, e.latLng.lng);
+        getWeatherData(e);
     });
-
 }
 
 function addMarker( map, position, title) {
@@ -54,19 +60,11 @@ function placeMarkerAndPanTo(latLng, map) {
 
 }
 
-function getWeatherData(lat,lng) {
-    $.ajax({
-        url: '/Home/GetWeatherData',
-        type: 'GET',
-        data: { lat: lat, lng: lng },
-        success: function (data) {
-            //console.log(data);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            //some errror, some show err msg to user and log the error  
-            alert(xhr.responseText);
-        }
-    });
+function getWeatherData(e) {
+    var json = JSON.stringify(e);
+    const jsonObj = JSON.parse(json);
+    const position = jsonObj.latLng;
+    location.href = `/Home/?lat=${position.lat}&lng=${position.lng}`;
 }
 
 initMap();

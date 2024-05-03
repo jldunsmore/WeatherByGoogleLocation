@@ -21,14 +21,14 @@ namespace WeatherByGoogleLocation.Controllers
             client.DefaultRequestHeaders.Add("User-Agent", "(weatherbygooglemap, jldunsmore@gmail.com)");
         }
 
-        public IActionResult Index()
+        public IActionResult Index(double lat, double lng)
         {
-            var weatherData = GetWeatherData(0,0);
-            return View(weatherData);
-        }
-        public IActionResult ShowWeather(WeatherData weatherData)
-        {
-            return View(weatherData);
+            ViewBag.APIKey = "AIzaSyDJ9csYo9ulNkY8CTUHDVGUTbQ4_8CuwEw";
+            var weatherData = GetWeatherData(lat,lng);
+            ViewBag.Latitude = weatherData.Lat;
+            ViewBag.Longitude = weatherData.Lng;
+            ViewBag.Forecast = weatherData.RawWeatherData;
+            return View();
         }
 
         public IActionResult Privacy()
@@ -36,14 +36,12 @@ namespace WeatherByGoogleLocation.Controllers
             return View();
         }
 
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpGet]
         public WeatherData GetWeatherData(double lat, double lng)
         {
             if (lat == 0) { lat = 41.591494859495114; }
@@ -59,6 +57,7 @@ namespace WeatherByGoogleLocation.Controllers
             var forcastHourlyURL = $"https://api.weather.gov/gridpoints/TOP/32,81/forecast/hourly";
             var forcastHourly = JsonConvert.DeserializeObject<dynamic>(GetAPIAsync(forcastHourlyURL).Result);
 
+            //fill this out and display
             var weatherData = new WeatherData
             {
                 Lat = lat,
@@ -66,7 +65,6 @@ namespace WeatherByGoogleLocation.Controllers
                 RawWeatherData = forecast.properties.periods[0].detailedForecast
 
             };
-            ShowWeather(weatherData);
             return weatherData;
         }
 
